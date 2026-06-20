@@ -6,7 +6,7 @@ const initialGameBoard = [
     [null, null, null]
 ];
 
-export default function GameBoard(){
+export default function GameBoard({onSelectSquare, activePlayerSymbol}){
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     function handleSelectSquare(rowIndex, colIndex) {
@@ -15,9 +15,11 @@ export default function GameBoard(){
             // return preGameBoard; // this type of state change can lead to strange bugs or side effects if you have multiple places in your appln that are scheduling same updates for the same state. notes in our copy
             // below is correct way to do 
             const updatedBoard = [...preGameBoard.map(innerArray => [...innerArray])];
-            updatedBoard[rowIndex][colIndex] = 'X';
+            updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
             return updatedBoard;
         });
+
+        onSelectSquare();
     }
     return (
         <ol id="game-board">
